@@ -201,7 +201,9 @@ const ResultsDashboard = () => {
         iconColor: '#3B82F6',
       },
     };
-    return styles[severity] || styles.mild;
+    // Conflicts arrive as high / medium / low (AI) or severe / moderate / mild (matrix): treat them alike
+    const alias = { critical: 'severe', high: 'severe', medium: 'moderate', low: 'mild' };
+    return styles[alias[severity] || severity] || styles.mild;
   };
 
   return (
