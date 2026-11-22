@@ -98,6 +98,33 @@ Skincare enthusiasts waste money and risk skin damage by unknowingly combining i
 
 ---
 
+## 🌐 Static Demo
+
+The frontend can also run as a **static site with no backend**, so the whole flow (onboarding, adding products, analysis, results, profile) can be tried from a link with no Convex deployment or API key. In demo mode `convex/react` is swapped for an in-browser engine (`Frontend/src/demo/`), and the UI is unchanged.
+
+| Live app | Static demo |
+|---|---|
+| `users.createOrUpdateProfile` / `getUserProfile` (Convex) | Same data model, kept in `localStorage` |
+| `analysis.analyzeRoutine`: saves the routine, matches ingredients, asks the AI model for the analysis, scores it, saves conflicts | The same steps in the browser. The AI step is replaced by a rule-based advisor |
+| Compatibility matrix and ingredient database (`seed.ts`) | The same 29 ingredients and 21 rules, plus 4 clearly marked extensions (Benzoyl Peroxide with Vitamin C, retinoid stacking, AHA stacking) |
+| AI-written warnings, benefits, routine and summary | Generated from skin-type rules: warnings per skin type and concern, the top 3 beneficial ingredients, a conflict-free AM/PM routine, and a personalised summary |
+| Brand-name extraction by the AI model | Known-brand matching, then a first-word guess |
+
+Free-text names are matched to the database (for example `15% L-Ascorbic Acid`, `Vitamin C` and `Granactive Retinoid`), and derivatives such as Magnesium Ascorbyl Phosphate or Retinyl Palmitate inherit their parent's rules with a softer severity. Products used at different times of day only raise irritation reminders, not pH or deactivation conflicts.
+
+This is general cosmetic-chemistry guidance, not medical advice. The static demo does not call any AI model.
+
+```bash
+cd Frontend
+npm install
+npm run dev:demo      # dev server in demo mode
+npm run build:demo    # static build in Frontend/dist
+```
+
+**Deploy on Vercel:** import the repository and set **Root Directory** to `Frontend`. `Frontend/vercel.json` runs `npm run build:demo` and rewrites every route to `index.html`, so no environment variables are needed. A regular `npm run build` still builds the app that talks to Convex.
+
+---
+
 ## 🚀 Quick Start
 
 ### Prerequisites

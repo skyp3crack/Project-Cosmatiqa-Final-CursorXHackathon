@@ -8,10 +8,12 @@ import ProductInput from "./Components/ProductInput/ProductInput";
 import AnalysisLoading from "./Components/AnalysisLoading/Analysis";
 import Profile from "./Components/Profile/Profile";
 import BottomNavigation from "./Components/BottomNavigation/BottomNavigation";
+import DemoBanner from "./demo/DemoBanner";
 
 function App() {
     return (
         <div>
+            <DemoBanner />
             <Routes>
                 <Route path="/" element={<WelcomePage />} />
                 <Route path="/onboarding" element={<Onboarding />} />
